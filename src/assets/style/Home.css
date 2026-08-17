@@ -1,0 +1,1963 @@
+/* ==========================================================================
+   NEXUS RIGS - MODERN CYBERPUNK DARK THEME SYSTEM
+   PURE CSS DESIGN SYSTEM & AESTHETIC DIRECTIVES
+   ========================================================================== */
+
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Orbitron:wght@700;900&family=Rajdhani:wght@500;600;700&display=swap');
+
+:root {
+  /* Color Palette */
+  --bg-void: #080B10;
+  --bg-surface: #05070B;
+  --glass-color: rgba(16, 22, 34, 0.75);
+  
+  --accent-cyan: #00F0FF;
+  --accent-magenta: #FF007F;
+  --accent-purple: #8B00FF;
+  --accent-lime: #39FF14;
+  
+  --text-primary: #FFFFFF;
+  --text-muted: #94A3B8;
+  --border-color: rgba(0, 240, 255, 0.12);
+  --border-glow: rgba(0, 240, 255, 0.25);
+
+  /* Typography */
+  --font-display: 'Orbitron', sans-serif;
+  --font-interface: 'Rajdhani', sans-serif;
+  --font-body: 'Inter', sans-serif;
+
+  /* Transitions */
+  --transition-fast: 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-normal: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-slow: 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ==========================================================================
+   1. CSS RESET & BASICS
+   ========================================================================== */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 13.5px; /* Reduced from 16px for a more compact, premium layout */
+  background-color: var(--bg-void);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+}
+
+body {
+  overflow-x: hidden;
+  background-color: var(--bg-void);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  transition: color var(--transition-fast);
+}
+
+button, input, select, textarea {
+  font-family: inherit;
+  background: none;
+  border: none;
+  color: inherit;
+}
+
+/* Scrollbar Customization */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-void);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(139, 0, 255, 0.2);
+  border-radius: 3px;
+  border: 1px solid var(--border-color);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-cyan);
+  box-shadow: 0 0 8px var(--accent-cyan);
+}
+
+/* Selection */
+::selection {
+  background: var(--accent-magenta);
+  color: var(--text-primary);
+}
+
+/* ==========================================================================
+   2. REUSABLE SYSTEM COMPONENTS & WRAPPERS
+   ========================================================================== */
+.nx-wrapper {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+.nx-background-grid {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  background-image: 
+    linear-gradient(to right, rgba(0, 240, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 240, 255, 0.02) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+/* Background Cyber Glowing Orbs */
+.nx-ambient-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(150px);
+  opacity: 0.12;
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+.orb-1 {
+  top: 10%;
+  left: -10%;
+  width: 450px;
+  height: 450px;
+  background: var(--accent-cyan);
+  animation: floatOrb 22s infinite alternate ease-in-out;
+}
+.orb-2 {
+  top: 50%;
+  right: -10%;
+  width: 500px;
+  height: 500px;
+  background: var(--accent-purple);
+  animation: floatOrb 28s infinite alternate ease-in-out-reverse;
+}
+.orb-3 {
+  bottom: 10%;
+  left: 20%;
+  width: 400px;
+  height: 400px;
+  background: var(--accent-magenta);
+  animation: floatOrb 18s infinite alternate ease-in-out;
+}
+
+@keyframes floatOrb {
+  0% { transform: translateY(0) scale(1); }
+  100% { transform: translateY(40px) scale(1.05); }
+}
+
+/* Cyber Corner Brackets */
+.nx-corner-bracket {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border: 1.5px solid var(--accent-cyan);
+  z-index: 5;
+  pointer-events: none;
+}
+.nx-corner-bracket.tl { top: 0; left: 0; border-right: none; border-bottom: none; }
+.nx-corner-bracket.tr { top: 0; right: 0; border-left: none; border-bottom: none; }
+.nx-corner-bracket.bl { bottom: 0; left: 0; border-right: none; border-top: none; }
+.nx-corner-bracket.br { bottom: 0; right: 0; border-left: none; border-top: none; }
+
+/* Sections */
+.nx-section {
+  position: relative;
+  z-index: 1;
+  padding: 80px 6%;
+  max-width: 1300px;
+  margin: 0 auto;
+}
+
+.nx-section-header {
+  margin-bottom: 45px;
+  text-align: left;
+}
+
+.nx-section-tag {
+  font-family: var(--font-interface);
+  color: var(--accent-magenta);
+  letter-spacing: 2px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  display: block;
+  margin-bottom: 8px;
+  text-shadow: 0 0 8px rgba(255, 0, 127, 0.35);
+}
+
+.nx-section-title {
+  font-family: var(--font-display);
+  font-size: 2rem; /* Reduced from 2.5rem */
+  font-weight: 900;
+  letter-spacing: -0.5px;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+}
+
+.nx-section-desc {
+  font-family: var(--font-body);
+  color: var(--text-muted);
+  font-size: 0.95rem; /* Reduced from 1.1rem */
+  line-height: 1.55;
+  max-width: 650px;
+}
+
+.nx-highlight-cyan {
+  color: var(--accent-cyan);
+  text-shadow: 0 0 12px rgba(0, 240, 255, 0.4);
+}
+
+.nx-highlight-magenta {
+  color: var(--accent-magenta);
+  text-shadow: 0 0 12px rgba(255, 0, 127, 0.4);
+}
+
+/* Glassmorphism base styling */
+.nx-glass-panel {
+  background: var(--glass-color);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+}
+
+/* ==========================================================================
+   3. STICKY HEADER & NAVIGATION DRAWER
+   ========================================================================== */
+.nx-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 70px; /* Reduced from 80px */
+  z-index: 100;
+  background: rgba(8, 11, 16, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border-color);
+  box-shadow: 0 4px 25px rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+}
+
+.nx-header-container {
+  width: 90%;
+  max-width: 1300px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Logo Design */
+.nx-logo-area {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 1.35rem; /* Reduced from 1.6rem */
+  letter-spacing: 0.5px;
+}
+.nx-logo-brand {
+  color: var(--text-primary);
+}
+.nx-logo-divider {
+  color: var(--accent-cyan);
+  animation: pulseNeon 1.5s infinite alternate;
+}
+.nx-logo-sub {
+  color: var(--accent-magenta);
+}
+
+@keyframes pulseNeon {
+  0% { opacity: 0.3; text-shadow: none; }
+  100% { opacity: 1; text-shadow: 0 0 6px var(--accent-cyan); }
+}
+
+/* Navigation Links */
+.nx-desktop-nav {
+  display: flex;
+  gap: 24px; /* Reduced from 32px */
+}
+.nx-desktop-nav a {
+  font-family: var(--font-interface);
+  font-weight: 600;
+  font-size: 0.9rem; /* Reduced from 1.05rem */
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+  position: relative;
+  padding: 6px 0;
+}
+.nx-desktop-nav a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--accent-cyan);
+  box-shadow: 0 0 6px var(--accent-cyan);
+  transition: width var(--transition-fast);
+}
+.nx-desktop-nav a:hover {
+  color: var(--text-primary);
+}
+.nx-desktop-nav a:hover::after {
+  width: 100%;
+}
+
+/* Header Action CTA Button */
+.nx-cta-btn {
+  font-family: var(--font-interface);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  background: transparent;
+  color: var(--accent-cyan);
+  border: 1px solid var(--accent-cyan);
+  padding: 8px 18px; /* Reduced from 10px 24px */
+  border-radius: 2px;
+  box-shadow: 0 0 8px rgba(0, 240, 255, 0.15);
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: all var(--transition-fast);
+}
+.nx-cta-btn:hover {
+  background: var(--accent-cyan);
+  color: var(--bg-void);
+  box-shadow: 0 0 15px var(--accent-cyan);
+}
+
+/* Hamburger Trigger */
+.nx-hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  background: none;
+  border: none;
+}
+.nx-hamburger .bar {
+  width: 22px;
+  height: 2px;
+  background: var(--text-primary);
+  transition: all var(--transition-fast);
+}
+
+/* Mobile Drawer */
+.nx-mobile-drawer {
+  position: fixed;
+  top: 70px;
+  left: 0;
+  width: 100%;
+  height: calc(100vh - 70px);
+  background: rgba(5, 7, 11, 0.98);
+  backdrop-filter: blur(20px);
+  border-top: 1px solid var(--border-color);
+  z-index: 99;
+  transform: translateX(100%);
+  transition: transform var(--transition-normal);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.nx-mobile-drawer.open {
+  transform: translateX(0);
+}
+.nx-mobile-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  align-items: center;
+}
+.nx-mobile-nav a {
+  font-family: var(--font-interface);
+  font-size: 1.35rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+}
+.nx-mobile-nav a:hover {
+  color: var(--accent-cyan);
+  text-shadow: 0 0 8px var(--accent-cyan);
+}
+.nx-mobile-cta {
+  border: 1px solid var(--accent-magenta) !important;
+  color: var(--accent-magenta) !important;
+  padding: 10px 28px !important;
+  border-radius: 3px;
+  font-size: 1.1rem !important;
+}
+.nx-mobile-cta:hover {
+  background: var(--accent-magenta);
+  color: var(--text-primary) !important;
+  box-shadow: 0 0 15px var(--accent-magenta);
+}
+
+/* ==========================================================================
+   4. HIGH-IMPACT HERO SECTION
+   ========================================================================== */
+.nx-hero {
+  position: relative;
+  z-index: 2;
+  padding: 120px 5% 70px 5%;
+  max-width: 1300px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 50px;
+  align-items: center;
+  min-height: calc(100vh - 70px);
+}
+
+.nx-hero-content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Glow Pill Badge */
+.nx-hero-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  align-self: flex-start;
+  background: rgba(139, 0, 255, 0.08);
+  border: 1px solid var(--accent-purple);
+  padding: 6px 14px;
+  border-radius: 50px;
+  font-family: var(--font-interface);
+  font-size: 0.8rem; /* Reduced from 0.9rem */
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  box-shadow: 0 0 10px rgba(139, 0, 255, 0.15);
+  animation: pulseBadge 3s infinite alternate;
+}
+
+@keyframes pulseBadge {
+  0% { box-shadow: 0 0 8px rgba(139, 0, 255, 0.15); }
+  100% { box-shadow: 0 0 20px rgba(139, 0, 255, 0.4); }
+}
+
+.nx-hero-title {
+  font-family: var(--font-display);
+  font-size: 2.8rem; /* Reduced from 3.8rem for a more clean/premium look */
+  font-weight: 900;
+  line-height: 1.15;
+  text-transform: uppercase;
+  letter-spacing: -1.5px;
+}
+
+.nx-hero-subtitle {
+  color: var(--text-muted);
+  font-size: 0.98rem; /* Reduced from 1.2rem */
+  line-height: 1.55;
+  max-width: 530px;
+}
+
+.nx-hero-buttons {
+  display: flex;
+  gap: 16px;
+  margin-top: 8px;
+}
+
+.nx-btn-primary {
+  font-family: var(--font-interface);
+  font-weight: 700;
+  font-size: 0.95rem; /* Reduced from 1.1rem */
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  background: var(--accent-cyan);
+  color: var(--bg-void);
+  padding: 12px 28px; /* Slightly tighter padding */
+  border-radius: 2px;
+  box-shadow: 0 0 12px rgba(0, 240, 255, 0.25);
+  transition: all var(--transition-fast);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.nx-btn-primary:hover {
+  background: #FFFFFF;
+  color: var(--bg-void);
+  box-shadow: 0 0 20px #FFFFFF;
+}
+
+.nx-btn-secondary {
+  font-family: var(--font-interface);
+  font-weight: 700;
+  font-size: 0.95rem; /* Reduced from 1.1rem */
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border: 1px solid var(--accent-magenta);
+  color: var(--accent-magenta);
+  padding: 12px 28px;
+  border-radius: 2px;
+  box-shadow: 0 0 10px rgba(255, 0, 127, 0.05);
+  transition: all var(--transition-fast);
+  cursor: pointer;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+}
+.nx-btn-secondary:hover {
+  background: var(--accent-magenta);
+  color: var(--text-primary);
+  box-shadow: 0 0 20px var(--accent-magenta);
+}
+
+.nx-hero-trust-pills {
+  display: flex;
+  gap: 16px;
+  margin-top: 16px;
+}
+.nx-trust-pill {
+  font-family: var(--font-interface);
+  font-size: 0.85rem; /* Reduced from 0.95rem */
+  color: var(--accent-cyan);
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+/* Showcase card with corner cyber brackets */
+.nx-hero-showcase {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.nx-cyber-card-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 480px; /* Sized down slightly */
+  padding: 12px;
+  background: rgba(16, 22, 34, 0.45);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+}
+.nx-showcase-image-holder {
+  position: relative;
+  width: 100%;
+  border-radius: 2px;
+  overflow: hidden;
+  aspect-ratio: 16/10;
+}
+.nx-showcase-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--transition-slow);
+}
+.nx-cyber-card-wrapper:hover .nx-showcase-img {
+  transform: scale(1.04);
+}
+
+/* Floating Benchmark Chips */
+.nx-benchmark-chip {
+  position: absolute;
+  background: rgba(5, 7, 11, 0.92);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--border-color);
+  padding: 8px 14px;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  z-index: 6;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+}
+.chip-fps {
+  top: 8%;
+  left: -6%;
+  border-left: 2px solid var(--accent-cyan);
+  animation: floatChip 4s infinite alternate ease-in-out;
+}
+.chip-thermal {
+  bottom: 10%;
+  right: -6%;
+  border-left: 2px solid var(--accent-magenta);
+  animation: floatChip 4s infinite alternate ease-in-out-reverse;
+}
+
+@keyframes floatChip {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-8px); }
+}
+
+.nx-chip-val {
+  font-family: var(--font-interface);
+  font-weight: 700;
+  font-size: 0.95rem; /* Reduced from 1.1rem */
+  color: var(--text-primary);
+}
+.nx-chip-sub {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  font-family: var(--font-body);
+}
+
+/* ==========================================================================
+   5. STATS & TRUST VERIFICATION BAR
+   ========================================================================== */
+.nx-stats-bar {
+  position: relative;
+  z-index: 2;
+  background: var(--bg-surface);
+  border-top: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
+  padding: 30px 5%;
+}
+
+.nx-stats-container {
+  max-width: 1300px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  text-align: center;
+}
+
+.nx-stat-item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.nx-stat-number {
+  font-family: var(--font-display);
+  font-size: 2.2rem; /* Reduced from 2.8rem */
+  font-weight: 900;
+  color: var(--accent-cyan);
+  text-shadow: 0 0 8px rgba(0, 240, 255, 0.25);
+}
+
+.nx-stat-label {
+  font-family: var(--font-interface);
+  font-weight: 600;
+  font-size: 0.85rem; /* Reduced from 1.1rem */
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* ==========================================================================
+   6. BEFORE / AFTER IMAGE COMPARISON SLIDER
+   ========================================================================== */
+.nx-slider-section {
+  padding-bottom: 100px;
+}
+
+.nx-slider-container {
+  width: 100%;
+}
+
+.nx-slider-inner {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 50px;
+  align-items: center;
+}
+
+.nx-image-comparison {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4/3;
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  user-select: none;
+}
+
+.nx-image-after {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+}
+
+.nx-image-before-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: var(--slider-pos);
+  height: 100%;
+  overflow: hidden;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.nx-image-before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  max-width: none;
+}
+
+/* Glowing divider line */
+.nx-slider-divider {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: var(--slider-pos);
+  width: 2px;
+  background: var(--accent-cyan);
+  box-shadow: 0 0 10px var(--accent-cyan);
+  z-index: 20;
+  pointer-events: none;
+}
+
+.nx-slider-glowing-handle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 36px; /* Reduced from 44px */
+  height: 36px;
+  background: var(--bg-surface);
+  border: 1.5px solid var(--accent-cyan);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 0 12px rgba(0, 240, 255, 0.5);
+  z-index: 30;
+}
+
+.nx-handle-arrows {
+  font-family: var(--font-interface);
+  font-weight: 700;
+  color: var(--accent-cyan);
+  font-size: 0.95rem;
+}
+
+/* Hidden control overlay */
+.nx-comparison-range {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: ew-resize;
+  z-index: 40;
+}
+
+/* Checklist Details */
+.nx-specs-checklist {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+.nx-checklist-title {
+  font-family: var(--font-display);
+  font-size: 1.45rem; /* Reduced from 1.8rem */
+  letter-spacing: -0.5px;
+  text-transform: uppercase;
+}
+.nx-checklist-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.nx-checklist-item {
+  display: flex;
+  gap: 16px;
+}
+.nx-check-icon {
+  width: 24px;
+  height: 24px;
+  background: rgba(57, 255, 20, 0.08);
+  border: 1px solid var(--accent-lime);
+  color: var(--accent-lime);
+  border-radius: 50%;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  font-weight: 700;
+  font-size: 0.8rem;
+}
+.nx-checklist-item h4 {
+  font-family: var(--font-interface);
+  font-size: 1.1rem; /* Reduced from 1.25rem */
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 2px;
+}
+.nx-checklist-item p {
+  color: var(--text-muted);
+  font-size: 0.88rem; /* Reduced from 0.95rem */
+  line-height: 1.45;
+}
+
+/* ==========================================================================
+   7. CORE PRODUCTS & HARDWARE CATALOG (FILTERABLE GRID)
+   ========================================================================== */
+.nx-filter-tabs {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 36px;
+  flex-wrap: wrap;
+}
+
+.nx-tab-btn {
+  font-family: var(--font-interface);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 10px 22px; /* Reduced padding */
+  border: 1px solid var(--border-color);
+  background: rgba(16, 22, 34, 0.3);
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: all var(--transition-fast);
+  border-radius: 2px;
+}
+.nx-tab-btn:hover, .nx-tab-btn.active {
+  border-color: var(--accent-cyan);
+  color: var(--accent-cyan);
+  box-shadow: 0 0 10px rgba(0, 240, 255, 0.12);
+  background: rgba(0, 240, 255, 0.04);
+}
+
+.nx-products-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.nx-product-card {
+  background: var(--glass-color);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  overflow: hidden;
+  transition: transform var(--transition-fast), border-color var(--transition-fast);
+  display: flex;
+  flex-direction: column;
+}
+.nx-product-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--accent-cyan);
+}
+
+.nx-product-image-container {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4/5;
+  overflow: hidden;
+  background: #020202;
+}
+
+.nx-product-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--transition-slow);
+}
+.nx-product-card:hover .nx-product-img {
+  transform: scale(1.03);
+}
+
+.nx-product-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  font-family: var(--font-interface);
+  font-weight: 700;
+  font-size: 0.75rem;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 20px;
+}
+.nx-product-badge.stock {
+  background: rgba(57, 255, 20, 0.08);
+  border: 1px solid var(--accent-lime);
+  color: var(--accent-lime);
+}
+.nx-product-badge.custom {
+  background: rgba(139, 0, 255, 0.08);
+  border: 1px solid var(--accent-purple);
+  color: var(--accent-purple);
+}
+
+.nx-product-details {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  gap: 10px;
+}
+
+.nx-product-name {
+  font-family: var(--font-display);
+  font-size: 1.1rem; /* Reduced from 1.3rem */
+  text-transform: uppercase;
+}
+
+.nx-product-specs {
+  color: var(--text-muted);
+  font-size: 0.85rem; /* Reduced from 0.9rem */
+  line-height: 1.4;
+  flex-grow: 1;
+}
+
+.nx-product-pricing-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 8px;
+}
+
+.nx-product-price {
+  font-family: var(--font-display);
+  font-size: 1.2rem; /* Reduced from 1.4rem */
+  color: var(--accent-cyan);
+}
+
+.nx-product-cta {
+  font-family: var(--font-interface);
+  font-weight: 700;
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  color: var(--accent-magenta);
+  border: 1px solid var(--accent-magenta);
+  padding: 6px 14px;
+  border-radius: 2px;
+  transition: all var(--transition-fast);
+}
+.nx-product-cta:hover {
+  background: var(--accent-magenta);
+  color: var(--text-primary);
+  box-shadow: 0 0 12px rgba(255, 0, 127, 0.35);
+}
+
+/* ==========================================================================
+   8. TACTICAL OFFERS & UPGRADE BUNDLES
+   ========================================================================== */
+.nx-offers-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.nx-offer-card {
+  position: relative;
+  background: var(--glass-color);
+  border: 1px solid var(--border-color);
+  padding: 30px; /* Reduced from 40px */
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  overflow: hidden;
+  transition: border-color var(--transition-fast);
+}
+
+.nx-offer-card.bg-magenta-glow::before {
+  content: '';
+  position: absolute;
+  top: -120px;
+  right: -120px;
+  width: 240px;
+  height: 240px;
+  background: radial-gradient(circle, rgba(255, 0, 127, 0.1) 0%, transparent 70%);
+  border-radius: 50%;
+}
+.nx-offer-card.bg-cyan-glow::before {
+  content: '';
+  position: absolute;
+  top: -120px;
+  right: -120px;
+  width: 240px;
+  height: 240px;
+  background: radial-gradient(circle, rgba(0, 240, 255, 0.1) 0%, transparent 70%);
+  border-radius: 50%;
+}
+.nx-offer-card.bg-purple-glow::before {
+  content: '';
+  position: absolute;
+  top: -120px;
+  right: -120px;
+  width: 240px;
+  height: 240px;
+  background: radial-gradient(circle, rgba(139, 0, 255, 0.1) 0%, transparent 70%);
+  border-radius: 50%;
+}
+
+.nx-offer-card:hover {
+  border-color: rgba(255, 255, 255, 0.18);
+}
+
+.nx-offer-badge {
+  font-family: var(--font-interface);
+  color: var(--accent-cyan);
+  font-weight: 700;
+  font-size: 0.82rem; /* Reduced from 0.9rem */
+  letter-spacing: 1.5px;
+}
+
+.nx-offer-title {
+  font-family: var(--font-display);
+  font-size: 1.3rem; /* Reduced from 1.6rem */
+  text-transform: uppercase;
+}
+
+.nx-offer-text {
+  color: var(--text-muted);
+  line-height: 1.45;
+  font-size: 0.9rem; /* Reduced from 1.0rem */
+}
+
+.nx-offer-btn {
+  font-family: var(--font-interface);
+  font-weight: 700;
+  text-transform: uppercase;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 10px 20px;
+  text-align: center;
+  border-radius: 2px;
+  margin-top: auto;
+  font-size: 0.85rem;
+  transition: all var(--transition-fast);
+}
+.nx-offer-btn:hover {
+  background: var(--text-primary);
+  color: var(--bg-void);
+  border-color: var(--text-primary);
+}
+
+/* ==========================================================================
+   9. INTERACTIVE HARDWARE ALTERATION & BOOKING FORM
+   ========================================================================== */
+.nx-booking-box {
+  background: rgba(5, 7, 11, 0.85);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 40px 6%; /* Reduced from 60px 8% */
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.45);
+}
+
+.nx-success-banner {
+  background: rgba(57, 255, 20, 0.06);
+  border: 1px solid var(--accent-lime);
+  border-radius: 4px;
+  padding: 18px;
+  margin-bottom: 30px;
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  animation: glowSuccess 2s infinite alternate;
+}
+
+@keyframes glowSuccess {
+  0% { box-shadow: 0 0 8px rgba(57, 255, 20, 0.08); }
+  100% { box-shadow: 0 0 20px rgba(57, 255, 20, 0.25); }
+}
+
+.nx-success-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--accent-lime);
+  color: var(--bg-void);
+  font-weight: 900;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  font-size: 1.1rem;
+}
+
+.nx-success-banner h4 {
+  font-family: var(--font-interface);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #FFFFFF;
+}
+
+.nx-success-banner p {
+  color: var(--text-muted);
+  font-size: 0.88rem;
+}
+
+.nx-booking-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.nx-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 22px 18px;
+}
+
+.nx-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.nx-form-group.span-full {
+  grid-column: span 2;
+}
+
+.nx-form-label {
+  font-family: var(--font-interface);
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--text-primary);
+  font-size: 0.88rem; /* Reduced from 0.95rem */
+  letter-spacing: 0.5px;
+}
+
+.nx-form-control {
+  width: 100%;
+  background: rgba(16, 22, 34, 0.85);
+  border: 1px solid var(--border-color);
+  padding: 11px;
+  border-radius: 2px;
+  color: #FFFFFF;
+  font-size: 0.9rem;
+  transition: all var(--transition-fast);
+}
+.nx-form-control:focus {
+  outline: none;
+  border-color: var(--accent-cyan);
+  box-shadow: 0 0 8px rgba(0, 240, 255, 0.2);
+}
+.nx-form-control.error {
+  border-color: var(--accent-magenta);
+}
+
+textarea.nx-form-control {
+  min-height: 100px;
+  resize: vertical;
+}
+
+select.nx-form-control {
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' fill='%2300F0FF'%3E%3Cpath d='M5 7L1 3h8z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 36px;
+}
+
+/* Radio Pills System */
+.nx-radio-pills {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.nx-radio-pill {
+  flex: 1;
+  min-width: 120px;
+  border: 1px solid var(--border-color);
+  background: rgba(16, 22, 34, 0.45);
+  padding: 11px 16px;
+  text-align: center;
+  border-radius: 2px;
+  cursor: pointer;
+  font-family: var(--font-interface);
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  transition: all var(--transition-fast);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+}
+.nx-radio-pill input[type="radio"] {
+  display: none;
+}
+.nx-radio-pill:hover, .nx-radio-pill.selected {
+  border-color: var(--accent-cyan);
+  color: var(--accent-cyan);
+  background: rgba(0, 240, 255, 0.04);
+}
+
+/* Checklist of services style */
+.nx-services-checklist {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+.nx-checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  font-size: 0.88rem; /* Reduced from 0.95rem */
+  color: var(--text-muted);
+  user-select: none;
+}
+.nx-checkbox-label input[type="checkbox"] {
+  display: none;
+}
+.nx-checkbox-box {
+  width: 18px;
+  height: 18px;
+  border: 1px solid var(--border-color);
+  background: rgba(16, 22, 34, 0.85);
+  display: inline-block;
+  position: relative;
+  border-radius: 2px;
+  transition: all var(--transition-fast);
+  flex-shrink: 0;
+}
+.nx-checkbox-label:hover .nx-checkbox-box {
+  border-color: var(--accent-cyan);
+}
+.nx-checkbox-label.checked .nx-checkbox-box {
+  background: var(--accent-cyan);
+  border-color: var(--accent-cyan);
+}
+.nx-checkbox-label.checked .nx-checkbox-box::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 6px;
+  width: 3.5px;
+  height: 8px;
+  border: solid var(--bg-void);
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+.nx-checkbox-label.checked {
+  color: var(--text-primary);
+}
+
+/* Divider inside forms */
+.nx-form-divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 15px;
+}
+.nx-form-divider span {
+  font-family: var(--font-interface);
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--accent-magenta);
+  font-size: 0.95rem; /* Reduced from 1.1rem */
+}
+.nx-form-divider::after {
+  content: '';
+  flex-grow: 1;
+  height: 1px;
+  background: var(--border-color);
+}
+
+.nx-error-text {
+  font-size: 0.8rem;
+  color: var(--accent-magenta);
+  font-family: var(--font-body);
+}
+
+/* Booking Submit button */
+.nx-btn-submit {
+  font-family: var(--font-interface);
+  font-weight: 700;
+  font-size: 1.1rem; /* Reduced from 1.25rem */
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  background: var(--accent-cyan);
+  color: var(--bg-void);
+  padding: 14px 30px;
+  border-radius: 2px;
+  box-shadow: 0 0 12px rgba(0, 240, 255, 0.25);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  margin-top: 24px;
+  width: 100%;
+}
+.nx-btn-submit:hover {
+  background: var(--text-primary);
+  color: var(--bg-void);
+  box-shadow: 0 0 20px #FFFFFF;
+}
+
+/* ==========================================================================
+   10. CRAFTSMANSHIP GALLERY (MASONRY LAYOUT)
+   ========================================================================== */
+.nx-gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: 200px; /* Reduced from 240px */
+  gap: 16px;
+}
+
+.nx-gallery-item {
+  position: relative;
+  overflow: hidden;
+  border-radius: 4px;
+  border: 1px solid var(--border-color);
+}
+
+.nx-gallery-item.size-tall {
+  grid-row: span 2;
+}
+.nx-gallery-item.size-wide {
+  grid-column: span 2;
+}
+
+.nx-gallery-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--transition-slow);
+}
+.nx-gallery-item:hover img {
+  transform: scale(1.04);
+}
+
+.nx-gallery-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to top, rgba(5, 7, 11, 0.95) 0%, rgba(5, 7, 11, 0.2) 70%, transparent 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 18px;
+  opacity: 0;
+  transition: opacity var(--transition-fast);
+}
+.nx-gallery-item:hover .nx-gallery-overlay {
+  opacity: 1;
+}
+
+.nx-gallery-category {
+  font-family: var(--font-interface);
+  font-weight: 700;
+  color: var(--accent-cyan);
+  font-size: 0.8rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.nx-gallery-overlay h4 {
+  font-family: var(--font-display);
+  font-size: 1.05rem; /* Reduced from 1.15rem */
+  color: var(--text-primary);
+  text-transform: uppercase;
+  margin-top: 2px;
+}
+
+/* ==========================================================================
+   11. SLIDING TESTIMONIALS CAROUSEL
+   ========================================================================== */
+.nx-testimonials-carousel-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 820px; /* Slimmed down */
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.nx-testimonials-track {
+  display: flex;
+  transition: transform var(--transition-normal);
+  width: 300%;
+}
+
+.nx-testimonial-slide {
+  width: 33.333%;
+  flex-shrink: 0;
+  padding: 8px;
+}
+
+.nx-testimonial-card {
+  background: var(--glass-color);
+  backdrop-filter: blur(14px);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  padding: 36px; /* Reduced from 48px */
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.nx-testimonial-user {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 16px;
+}
+
+.nx-user-avatar {
+  width: 52px; /* Reduced from 64px */
+  height: 52px;
+  border-radius: 50%;
+  border: 1.5px solid var(--accent-cyan);
+  box-shadow: 0 0 8px rgba(0, 240, 255, 0.3);
+  object-fit: cover;
+}
+
+.nx-user-name {
+  font-family: var(--font-display);
+  font-size: 1.1rem; /* Reduced from 1.25rem */
+  text-transform: uppercase;
+}
+.nx-user-handle {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+.nx-green-glow {
+  color: var(--accent-lime);
+  font-family: var(--font-interface);
+  font-weight: 700;
+  margin-left: 6px;
+}
+
+.nx-user-stats {
+  margin-left: auto;
+}
+.nx-val-badge {
+  font-family: var(--font-interface);
+  font-weight: 700;
+  background: rgba(0, 240, 255, 0.05);
+  border: 1px solid var(--accent-cyan);
+  color: var(--accent-cyan);
+  padding: 6px 12px;
+  border-radius: 30px;
+  font-size: 0.85rem; /* Reduced from 0.95rem */
+}
+
+.nx-testimonial-text {
+  font-style: italic;
+  font-size: 1rem; /* Reduced from 1.15rem */
+  line-height: 1.55;
+  color: #FFFFFF;
+}
+
+.nx-star-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  font-size: 0.95rem;
+}
+.nx-sub-badge {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  font-family: var(--font-interface);
+  text-transform: uppercase;
+  margin-left: auto;
+}
+
+.nx-carousel-dots {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 24px;
+}
+
+.nx-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+.nx-dot:hover, .nx-dot.active {
+  background: var(--accent-cyan);
+  box-shadow: 0 0 6px var(--accent-cyan);
+}
+
+/* ==========================================================================
+   12. WORKSHOP LOCATION, MAP & QUICK ENQUIRY FORM
+   ========================================================================== */
+.nx-workshop-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 50px;
+  align-items: flex-start;
+}
+
+.nx-workshop-left {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.nx-workshop-title {
+  font-family: var(--font-display);
+  font-size: 1.8rem; /* Reduced from 2.2rem */
+  text-transform: uppercase;
+}
+
+.nx-workshop-intro {
+  color: var(--text-muted);
+  line-height: 1.5;
+  font-size: 0.95rem;
+}
+
+.nx-workshop-contact-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin: 8px 0;
+}
+
+.nx-contact-item {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+}
+
+.nx-contact-icon {
+  width: 40px; /* Reduced from 48px */
+  height: 40px;
+  border-radius: 4px;
+  background: rgba(16, 22, 34, 0.65);
+  border: 1px solid var(--border-color);
+  font-size: 1.25rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.nx-contact-item h5 {
+  font-family: var(--font-interface);
+  font-weight: 700;
+  font-size: 0.95rem; /* Reduced from 1.1rem */
+  text-transform: uppercase;
+}
+.nx-contact-item p {
+  color: var(--text-muted);
+  font-size: 0.85rem; /* Reduced from 0.95rem */
+}
+
+.nx-enquiry-card {
+  background: var(--glass-color);
+  border: 1px solid var(--border-color);
+  padding: 24px;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.nx-enquiry-card h4 {
+  font-family: var(--font-display);
+  font-size: 1.1rem; /* Reduced from 1.25rem */
+  text-transform: uppercase;
+}
+.nx-enquiry-subtitle {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-top: -6px;
+}
+.nx-enquiry-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.nx-form-control-sm {
+  width: 100%;
+  background: rgba(8, 11, 16, 0.8);
+  border: 1px solid var(--border-color);
+  padding: 10px 12px;
+  border-radius: 2px;
+  color: #FFFFFF;
+  font-size: 0.88rem;
+}
+.nx-form-control-sm:focus {
+  outline: none;
+  border-color: var(--accent-cyan);
+}
+
+textarea.nx-form-control-sm {
+  resize: vertical;
+}
+
+.nx-enquiry-btn {
+  font-family: var(--font-interface);
+  font-weight: 700;
+  text-transform: uppercase;
+  background: var(--accent-magenta);
+  color: var(--text-primary);
+  padding: 10px;
+  border-radius: 2px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: all var(--transition-fast);
+  text-align: center;
+}
+.nx-enquiry-btn:hover {
+  background: #FFFFFF;
+  color: var(--bg-void);
+  box-shadow: 0 0 12px #FFFFFF;
+}
+
+.nx-workshop-right {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.nx-map-wrapper {
+  position: relative;
+  width: 100%;
+  height: 420px; /* Reduced from 480px */
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  overflow: hidden;
+  background: #000000;
+}
+
+.nx-map-coordinates {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  background: rgba(5, 7, 11, 0.85);
+  backdrop-filter: blur(8px);
+  padding: 6px 10px;
+  border-radius: 2px;
+  border: 1px solid var(--border-color);
+  font-family: var(--font-interface);
+  font-weight: 600;
+  font-size: 0.75rem;
+  letter-spacing: 0.5px;
+  color: var(--accent-cyan);
+}
+
+.nx-status-dot {
+  width: 6px;
+  height: 6px;
+  background: var(--accent-lime);
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 5px;
+  box-shadow: 0 0 6px var(--accent-lime);
+}
+
+.nx-map-badge {
+  margin-top: 12px;
+  font-family: var(--font-interface);
+  font-weight: 700;
+  font-size: 0.88rem;
+  color: var(--text-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  display: flex;
+  align-items: center;
+}
+
+/* ==========================================================================
+   13. COMPREHENSIVE FOOTER
+   ========================================================================== */
+.nx-footer {
+  position: relative;
+  z-index: 1;
+  background: var(--bg-surface);
+  border-top: 1px solid var(--border-color);
+  padding: 60px 5% 30px 5%;
+}
+
+.nx-footer-inner {
+  max-width: 1300px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.3fr 0.8fr 0.8fr 1.1fr;
+  gap: 50px;
+  padding-bottom: 45px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.nx-footer-branding {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.nx-footer-desc-text {
+  color: var(--text-muted);
+  line-height: 1.5;
+  font-size: 0.85rem; /* Reduced from 0.95rem */
+}
+
+.nx-warranty-badge {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  background: rgba(0, 240, 255, 0.04);
+  border: 1px solid rgba(0, 240, 255, 0.12);
+  padding: 10px 14px;
+  border-radius: 4px;
+  max-width: 250px;
+}
+.nx-badge-icon {
+  font-size: 1.4rem;
+}
+.nx-warranty-badge h6 {
+  font-family: var(--font-interface);
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  text-transform: uppercase;
+}
+.nx-warranty-badge p {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
+
+.nx-footer-col h4 {
+  font-family: var(--font-display);
+  font-size: 0.95rem; /* Reduced from 1.1rem */
+  text-transform: uppercase;
+  margin-bottom: 18px;
+  letter-spacing: 0.5px;
+}
+
+.nx-footer-col ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.nx-footer-col ul a {
+  color: var(--text-muted);
+  font-size: 0.85rem; /* Reduced from 0.95rem */
+  transition: all var(--transition-fast);
+}
+.nx-footer-col ul a:hover {
+  color: var(--accent-cyan);
+  padding-left: 2px;
+}
+
+.nx-footer-newsletter {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.nx-footer-newsletter h4 {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.nx-footer-newsletter p {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  line-height: 1.45;
+}
+
+.nx-newsletter-form {
+  display: flex;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.nx-newsletter-btn {
+  font-family: var(--font-interface);
+  font-weight: 700;
+  text-transform: uppercase;
+  background: var(--accent-cyan);
+  color: var(--bg-void);
+  padding: 8px 16px;
+  border-radius: 2px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+.nx-newsletter-btn:hover {
+  background: #FFFFFF;
+  box-shadow: 0 0 10px var(--accent-cyan);
+}
+
+.nx-footer-bottom-bar {
+  max-width: 1300px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 24px;
+  font-family: var(--font-interface);
+  font-size: 0.8rem;
+  letter-spacing: 0.5px;
+  color: var(--text-muted);
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.nx-footer-legal {
+  display: flex;
+  gap: 20px;
+}
+.nx-footer-legal a:hover {
+  color: var(--accent-cyan);
+}
+
+.mt-2 { margin-top: 6px; }
+
+/* ==========================================================================
+   14. RESPONSIVENESS & BREAKPOINTS
+   ========================================================================== */
+
+/* Breakpoint 1: Desktop (1280px and below) */
+@media (max-width: 1280px) {
+  .nx-hero-title {
+    font-size: 2.5rem;
+  }
+  .nx-stats-container {
+    gap: 16px;
+  }
+}
+
+/* Breakpoint 2: Tablet (1024px and below) */
+@media (max-width: 1024px) {
+  html {
+    font-size: 13px;
+  }
+  
+  .nx-hero {
+    grid-template-columns: 1fr;
+    gap: 50px;
+    padding-top: 110px;
+    text-align: center;
+  }
+  .nx-hero-pill {
+    align-self: center;
+  }
+  .nx-hero-subtitle {
+    max-width: 100%;
+  }
+  .nx-hero-buttons {
+    justify-content: center;
+  }
+  .nx-hero-trust-pills {
+    justify-content: center;
+  }
+  
+  .nx-stats-container {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+  }
+  
+  .nx-slider-inner {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+  
+  .nx-products-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .nx-offers-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  
+  .nx-gallery-grid {
+    grid-template-columns: repeat(2, 1fr);
+    grid-auto-rows: 180px;
+  }
+  .nx-gallery-item.size-wide {
+    grid-column: span 1;
+  }
+  
+  .nx-workshop-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  .nx-map-wrapper {
+    height: 340px;
+  }
+  
+  .nx-footer-inner {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+  }
+}
+
+/* Breakpoint 3: Mobile (768px and below) */
+@media (max-width: 768px) {
+  .nx-desktop-nav, .nx-cta-btn {
+    display: none;
+  }
+  
+  .nx-hamburger {
+    display: flex;
+  }
+  
+  .nx-hero-title {
+    font-size: 2.1rem;
+  }
+  
+  .nx-hero-buttons {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .nx-stats-container {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  
+  .nx-products-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .nx-form-grid {
+    grid-template-columns: 1fr;
+  }
+  .nx-form-group.span-full {
+    grid-column: span 1;
+  }
+  .nx-services-checklist {
+    grid-template-columns: 1fr;
+  }
+  
+  .nx-gallery-grid {
+    grid-template-columns: 1fr;
+    grid-auto-rows: 200px;
+  }
+  .nx-gallery-item.size-tall {
+    grid-row: span 1;
+  }
+  
+  .nx-footer-inner {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+  
+  .nx-footer-bottom-bar {
+    flex-direction: column;
+    text-align: center;
+  }
+}
