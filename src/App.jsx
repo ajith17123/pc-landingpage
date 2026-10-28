@@ -1,13 +1,15 @@
 import './App.css';
+import 'lenis/dist/lenis.css';
 import { Routes, Route, HashRouter } from 'react-router-dom';
-import { useState } from 'react';
 import { useEffect } from 'react';
-import React from 'react';
 import 'aos/dist/aos.css';
 import AOS from 'aos';
 import Home from './components/Home';
+import { useSmoothScroll } from './hooks/useSmoothScroll';
 
 function App () {
+  // Initialize Lenis smooth scroll coordinated with GSAP
+  useSmoothScroll();
 
   useEffect(()=> {
     AOS.init({
